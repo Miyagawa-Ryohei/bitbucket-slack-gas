@@ -4,7 +4,7 @@ init : .clasp.json
 	yarn clasp login
 	yarn clasp create --rootDir ./src
 
-setting :
+setting src/slack_url.ts :
 	echo "export const TARGET_URL =\""`cat .slackurl | sed r/\"//`"\"" > ./src/slack_url.ts
 
 deploy : setting

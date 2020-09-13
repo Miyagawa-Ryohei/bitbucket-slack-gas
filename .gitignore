@@ -636,3 +636,4 @@ dist
 
 /.clasp.json
 .idea
+/src/slack_url.ts

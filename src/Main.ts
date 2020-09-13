@@ -16,7 +16,14 @@ const doPost = (e:DoPost) => {
     };
     if("push" in param){
         if(param.repository?.name !== "develop") return 200;
-        jsonData.text = "developブランチが更新されました。\n actor : " + param.actor.display_name
+        jsonData.text = "developブランチが更新されました。\n actor : " + param.actor.display_name +
+            `\n\n開発担当者はリベースしてください` +
+            `\`\`\`\n` +
+            `git checkout develop \n` +
+            `git pull \n` +
+            `git checkout {作業ブランチ}\n` +
+            `git rebase develop`　+
+            `\`\`\`\n`
     }
     if("pullrequest" in param) {
         if(param.pullrequest?.destination.branch?.name !== "develop") return 200;
@@ -27,7 +34,14 @@ const doPost = (e:DoPost) => {
                 `\n 投稿者 : ` + param.pullrequest.author.display_name +
                 `\n URL : https://bitbucket.org/etc-proj/scraper-ts/pull-requests/${param.pullrequest.id}` +
                 `\n` + param.pullrequest.source.branch.name +　` → ` + param.pullrequest.destination.branch.name +
-                `\n--- 説明 ---\n` + param.pullrequest.description
+                `\n--- 説明 ---\n` + param.pullrequest.description +
+                `\n\n開発担当者はリベースしてください` +
+                `\`\`\`\n` +
+                `git checkout develop \n` +
+                `git pull \n` +
+                `git checkout {作業ブランチ}\n` +
+                `git rebase develop`　+
+                `\`\`\`\n`
         }
         const text =
             ` プルリクに変更があります。` +
